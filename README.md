@@ -70,7 +70,7 @@ The plan approval dialog is a `PermissionRequest` event for the `ExitPlanMode` t
 
 Modes 2 and 3 need two things from you:
 
-1. **Craft API URL** — Go to Craft Settings > API, create a connection, copy the endpoint. Looks like `https://connect.craft.do/links/YOUR_KEY/api/v1`
+1. **Craft API URL** — Go to Craft Settings > API, create a connection, copy the endpoint. Looks like `https://connect.craft.do/links/[your-key-id]/api/v1`
 2. **Parent page ID** — The UUID of the Craft page where plans will be nested as subpages. Find it in the page URL or via the API.
 
 The installer prompts for both, tests connectivity, and saves them to `~/.claude/hooks/craft-config.env` (permissions `600`). Edit that file anytime to update credentials.
@@ -132,9 +132,9 @@ rm ~/.claude/hooks/claude-plan-hook.sh
 - Check credentials: `cat ~/.claude/hooks/craft-config.env`
 - Test manually:
   ```bash
-  curl -s -X POST "YOUR_API_URL/blocks" \
+  curl -s -X POST "[your-api-url]/blocks" \
     -H "Content-Type: application/json" \
-    -d '{"blocks":[{"type":"text","markdown":"test"}],"position":{"position":"end","pageId":"YOUR_PAGE_ID"}}'
+    -d '{"blocks":[{"type":"text","markdown":"test"}],"position":{"position":"end","pageId":"[your-page-id]"}}'
   ```
 
 **Upgrading from the old Stop hook version:**

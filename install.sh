@@ -110,7 +110,7 @@ if [ "$MODE" = "2" ] || [ "$MODE" = "3" ]; then
     read -r INPUT_URL
     [ -n "$INPUT_URL" ] && CRAFT_API_URL="$INPUT_URL"
   else
-    printf "${CYAN}>${NC} Craft API URL (e.g. https://connect.craft.do/links/YOUR_KEY/api/v1): "
+    printf "${CYAN}>${NC} Craft API URL (e.g. https://connect.craft.do/links/[your-key-id]/api/v1): "
     read -r CRAFT_API_URL
   fi
 

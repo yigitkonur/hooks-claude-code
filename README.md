@@ -8,7 +8,7 @@ Claude Code's plan mode requires manual approval when `ExitPlanMode` is called. 
 
 ## Solution
 
-This hook checks the session transcript to confirm `ExitPlanMode` was actually called before auto-approving. Research stops pass through cleanly.
+This hook checks the session transcript to confirm `ExitPlanMode` was actually called before auto-approving. Research stops pass through cleanly. Every Stop event is logged to `~/.claude/hooks/stop-hook-debug.log` for debugging.
 
 ## One-liner install
 
@@ -19,12 +19,9 @@ git clone https://github.com/yigitkonur/script-auto-approve-plan-cc.git /tmp/aut
 ## Manual install
 
 ```bash
-# 1. Copy the hook
 mkdir -p ~/.claude/hooks
 cp auto-approve-plan.sh ~/.claude/hooks/auto-approve-plan.sh
 chmod +x ~/.claude/hooks/auto-approve-plan.sh
-
-# 2. Run the installer to wire up settings.json
 bash install.sh
 ```
 
@@ -32,12 +29,27 @@ bash install.sh
 
 The hook receives JSON on stdin from Claude Code's Stop event. It:
 
-1. **Exits early** if not in plan mode — zero overhead in normal usage
-2. **Reads `transcript_path`** from the hook input
-3. **Checks the last 10KB** of the transcript JSONL for an `ExitPlanMode` tool call
-4. **Only then** returns `{"decision": "block"}` to auto-approve the plan
+1. **Logs everything** to `~/.claude/hooks/stop-hook-debug.log` (full JSON payload, all keys)
+2. **Exits early** if `stop_hook_active=true` (prevents infinite loop)
+3. **Exits early** if not in plan mode (`permission_mode != "plan"`)
+4. **Checks the transcript** for `ExitPlanMode` in the last 20KB
+5. **Only then** returns `{"decision": "block"}` to auto-approve the plan
 
-If Claude stopped for any other reason (research, exploration, thinking), the hook exits silently and Claude proceeds normally.
+If Claude stopped for any other reason (research, exploration, thinking), the hook exits silently.
+
+## Debug log
+
+After running Claude Code in plan mode, check:
+
+```bash
+cat ~/.claude/hooks/stop-hook-debug.log
+```
+
+This shows every Stop event with:
+- Full JSON payload
+- All top-level keys
+- Key field values (permission_mode, transcript_path, etc.)
+- The decision made and why
 
 ## What the installer does
 
@@ -57,7 +69,7 @@ If Claude stopped for any other reason (research, exploration, thinking), the ho
 rm ~/.claude/hooks/auto-approve-plan.sh
 ```
 
-Then remove the Stop hook entry from `~/.claude/settings.json` (or leave it — it's harmless without the script file).
+Then remove the Stop hook entry from `~/.claude/settings.json`.
 
 ## License
 

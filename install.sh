@@ -24,11 +24,9 @@ chmod +x "$HOOK_SCRIPT"
 echo "[ok] Hook script installed to $HOOK_SCRIPT"
 
 # ── Merge hook config into settings.json ──────────────────────
-# The desired Stop hook entry
 HOOK_CMD="~/.claude/hooks/auto-approve-plan.sh"
 
 if [ ! -f "$SETTINGS" ]; then
-  # No settings file yet — create one with just the hook
   cat > "$SETTINGS" <<'ENDJSON'
 {
   "hooks": {
@@ -47,11 +45,9 @@ if [ ! -f "$SETTINGS" ]; then
 ENDJSON
   echo "[ok] Created $SETTINGS with Stop hook"
 else
-  # Settings file exists — check if hook is already present
   if jq -e '.hooks.Stop[]?.hooks[]? | select(.command == "~/.claude/hooks/auto-approve-plan.sh")' "$SETTINGS" &>/dev/null; then
     echo "[ok] Stop hook already present in $SETTINGS (no change)"
   else
-    # Add the Stop hook entry, preserving everything else
     TMP=$(mktemp)
     jq '
       .hooks //= {} |
@@ -68,3 +64,6 @@ echo "  1. Open Claude Code"
 echo "  2. Enter plan mode (Shift+Tab)"
 echo "  3. Give it a task — when it calls ExitPlanMode, the plan auto-approves"
 echo "  4. Research/exploration stops are NOT blocked"
+echo ""
+echo "Debug log: ~/.claude/hooks/stop-hook-debug.log"
+echo "  Every Stop event is logged there with full JSON payload."

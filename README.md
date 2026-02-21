@@ -1,7 +1,7 @@
 auto-approves Claude Code's "ready to code?" plan dialog so you stop clicking a button 50 times a day. optionally archives every plan to Craft.do as a timestamped card. pure bash, no dependencies beyond `jq`.
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/yigitkonur/hooks-claude-approve/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/yigitkonur/hooks-claude-code/main/install.sh)
 ```
 
 [![bash](https://img.shields.io/badge/bash-pure_shell-93450a.svg?style=flat-square)](https://www.gnu.org/software/bash/)
@@ -27,13 +27,13 @@ the installer asks you to pick one:
 ## install
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/yigitkonur/hooks-claude-approve/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/yigitkonur/hooks-claude-code/main/install.sh)
 ```
 
 or clone first:
 
 ```bash
-git clone https://github.com/yigitkonur/hooks-claude-approve.git /tmp/claude-plan-hook \
+git clone https://github.com/yigitkonur/hooks-claude-code.git /tmp/claude-plan-hook \
   && bash /tmp/claude-plan-hook/install.sh \
   && rm -rf /tmp/claude-plan-hook
 ```
@@ -78,7 +78,7 @@ the installer merges into `settings.json` without destroying existing hooks or s
 ## project structure
 
 ```
-hooks-claude-approve/
+hooks-claude-code/
   install.sh                — interactive installer
   uninstall.sh              — uninstaller
   hooks/
@@ -90,7 +90,7 @@ hooks-claude-approve/
 ## uninstall
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/yigitkonur/hooks-claude-approve/main/uninstall.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/yigitkonur/hooks-claude-code/main/uninstall.sh)
 ```
 
 or manually:

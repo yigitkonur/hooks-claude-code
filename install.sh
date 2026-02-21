@@ -12,7 +12,7 @@ CRAFT_CONFIG="$HOOK_DIR/craft-config.env"
 HOOK_SCRIPT="$HOOK_DIR/claude-plan-hook.sh"
 
 # GitHub raw URL for remote install (curl | bash)
-REPO_RAW="https://raw.githubusercontent.com/yigitkonur/hooks-claude-approve/main"
+REPO_RAW="https://raw.githubusercontent.com/yigitkonur/hooks-claude-code/main"
 
 # ── Colors ───────────────────────────────────────────────────────────
 RED='\033[0;31m'
